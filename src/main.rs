@@ -135,13 +135,12 @@ impl Titta {
     fn print_contents(&mut self) {
         let cols = 3;
 
-        let max_len: usize = self
+        let col_w: usize = (self
             .dir_items
             .iter()
             .map(|item| item.name.chars().count())
             .max()
-            .unwrap_or(0);
-        let col_width = (max_len * 2) + (max_len / 2);
+            .unwrap_or(0)) + 2;
 
         for row in self.dir_items.chunks(cols) {
             for item in row {
@@ -156,12 +155,17 @@ impl Titta {
                     color = format!("{}", &item.color_code);
                 }
 
-                // add spaces for even columns
                 let print =
                 format!("{color}{icon}{name}{color_end}", name = item.name);
-                let space =
-                " ".repeat(col_width.saturating_sub(print.chars().count()));
-                print!("{print}{space}")
+                let len =
+                (format!("{icon}{name}", name = item.name)).chars().count();
+
+                let output = {
+                    let spaces = " ".repeat(col_w.saturating_sub(len - 2));
+                    format!("{print}{spaces}")
+                };
+
+                print!("{output}");
             }
             println!();
         }

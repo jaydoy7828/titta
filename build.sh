@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 cargo build --release
-# /Users/simondanielsson/dev/rust/titta/target/release/titta -i -w ~/Downloads/
-/Users/simondanielsson/dev/rust/titta/target/release/titta -i -w -a ..
+cargo run --release -- -i -w -a ~/dev/rust
+# /Users/simondanielsson/dev/rust/titta/target/release/titta -i -w ~
+# /Users/simondanielsson/dev/rust/titta/target/release/titta -i -w ~/dev/rust/
+# /Users/simondanielsson/dev/rust/titta/target/release/titta -i -w -a ..
 
