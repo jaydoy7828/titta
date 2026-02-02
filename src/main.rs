@@ -228,7 +228,7 @@ impl Titta {
             };
         }
 
-        if let Some(path) = std::env::args().nth(self.arg_counter) {
+        if let Some(path) = std::env::args().nth(self.arg_counter - 1) {
             self.opt_dir = PathBuf::from(path);
             if self.opt_dir.exists() {
                 self.use_opt_dir = true;

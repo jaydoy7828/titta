@@ -1,5 +1,12 @@
 # titta - rust version of ls
 
+## todo
+
+- [ ] add support for seeing symlinks (ex: file -> /absolute/path/to/real/location)
+- [ ] add support for name sorting
+- [ ] add flag for previewing permissions
+- [ ] the default view should be 1-4 columns (dep. on viewport width) instead of one long list of files
+
 ## commands
 
 ta
@@ -13,11 +20,6 @@ ta
 -n : sort by name (0-9, A-Z)
 -c : sort by date/time created
 -a : sort by date/time last accessed
-
-
-
-
-
 
 ## the manpage for regular unix ls
 
