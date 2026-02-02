@@ -1,0 +1,18 @@
+[package]
+name = "titta"
+description = "Alternative to ls, built in Rust."
+repository = "https://github.com/simon-danielsson/titta"
+homepage = "https://www.simondanielsson.se"
+exclude = ["media/"]
+license = "MIT"
+readme = "README.md"
+version = "0.1.1"
+edition = "2024"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[dependencies]
