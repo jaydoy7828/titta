@@ -1,6 +1,4 @@
-use libc::{STDOUT_FILENO, TIOCGWINSZ, ioctl, winsize};
 use std::fs::{self};
-use std::mem::zeroed;
 use std::panic;
 use std::{io, path::PathBuf};
 
@@ -289,31 +287,4 @@ impl Titta {
 
         Ok(())
     }
-}
-
-fn terminal_width() -> Option<u16> {
-    unsafe {
-        let mut ws: winsize = zeroed();
-        if ioctl(STDOUT_FILENO, TIOCGWINSZ, &mut ws) == 0 {
-            Some(ws.ws_col)
-        } else {
-            None
-        }
-    }
-}
-
-fn split_into_four<T>(v: Vec<T>) -> Vec<Vec<T>> {
-    let len = v.len();
-    let base = len / 4;
-    let remainder = len % 4;
-
-    let mut iter = v.into_iter();
-    let mut result = Vec::with_capacity(4);
-
-    for i in 0..4 {
-        let size = base + if i < remainder { 1 } else { 0 };
-        result.push(iter.by_ref().take(size).collect());
-    }
-
-    result
 }
