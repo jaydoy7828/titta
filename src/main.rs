@@ -84,13 +84,8 @@ impl Titta {
                     color = format!("{}", &item.color_code);
                 }
 
-                // add extra icon for exe sh files
-                let mut name = item.name.clone();
-                if item.is_exec && self.f_show_executables {
-                    name = format!("{name}*")
-                }
-
-                let print = format!("{color}{icon}{name}{color_end}");
+                let print =
+                format!("{color}{icon}{name}{color_end}", name = item.name);
                 let len =
                 (format!("{icon}{name}", name = item.name)).chars().count();
 
@@ -138,7 +133,7 @@ impl Titta {
                     .to_string();
             }
 
-            let name = opath.as_mut().unwrap().file_name().display().to_string();
+            let mut name = opath.as_mut().unwrap().file_name().display().to_string();
 
             let mut is_exec: bool = false;
             let mut is_symlink: bool = false;
@@ -146,6 +141,10 @@ impl Titta {
 
             if let Ok(metadata) = opath.as_mut().unwrap().metadata() {
                 is_exec = self.is_executable(&metadata);
+                if is_exec {
+                    name = format!("{name}*");
+                }
+
                 is_symlink = metadata.is_symlink();
                 is_dir = metadata.is_dir();
                 // metadata.modified()
