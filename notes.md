@@ -7,6 +7,8 @@
 - [ ] add support for seeing symlinks (ex: file -> /absolute/path/to/real/location)
 - [ ] add support for name sorting
 - [ ] add flag for previewing permissions
+- [ ] tree subcommand
+- [x] help subcommand
 - [x] add "executable" sign to .sh files
 - [x] the default view should be 1-4 columns (dep. on viewport width) instead of one long list of files
 - [x] don't show hidden files (files with dot prefix) by default, add it in as an optional flag instead
@@ -16,26 +18,32 @@
 **special icons**
 
 If file && name contains:
-- [ ] LICENSE:
-- [ ] README:
+- [ ] LICENSE: 󱜦
+- [ ] README: 
 
 If file && has extension:
-- [ ] .conf: 
+- [ ] .conf: 󱂀
 
 If dir && name contains:
-- [ ] Downloads:
-- [ ] src: 
-- [ ] Library:
-- [ ] Pictures:
-- [ ] Music:
+- [ ] Downloads: 󱃩
+- [ ] src: 󰴊
+- [ ] Library: 󰲃
+- [ ] Pictures: 󱧻
+- [ ] Images: 󱧻
+- [ ] Movies: 󱧻
+- [ ] Favorites: 󱃫
+- [ ] Music: 󱍚
 - [ ] Applications:
-- [ ] .config:
+- [ ] .config: 󱁿
 
 ---
 
 ## commands
 
 titta <flags> <optional-path>
+
+- [x] help
+- [ ] tree
 
 - [x] -i : devicons
 - [x] -w : color
