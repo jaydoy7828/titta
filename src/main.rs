@@ -49,8 +49,8 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
+/// f = flag, s = subc, sf = subc flag
 struct Titta {
-    arg_counter: usize,
     current_dir: PathBuf,
     opt_dir: PathBuf,
     use_opt_dir: bool,
@@ -67,7 +67,6 @@ struct Titta {
 impl Titta {
     fn new() -> Self {
         Self {
-            arg_counter: 1,
             // dir
             opt_dir: PathBuf::new(),
             use_opt_dir: false,
@@ -270,7 +269,7 @@ impl Titta {
                     if self.opt_dir.exists() {
                         self.use_opt_dir = true;
                     } else {
-                        panic!("ERROR: Directory doesn't exist");
+                        eprintln!("Directory doesn't exist!");
                     }
                     break; // stop after first positional
                 }
