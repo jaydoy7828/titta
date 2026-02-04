@@ -4,6 +4,7 @@ use std::panic;
 use std::{io, path::PathBuf};
 
 mod file_attr;
+mod ta_tree;
 use crate::file_attr::*;
 
 #[allow(unused)]
@@ -18,13 +19,22 @@ struct Item {
     color_code: String,
     name: String,
     abs_path: PathBuf,
+    format: String,
 }
 
 fn main() -> io::Result<()> {
     let mut titta: Titta = Titta::new();
     titta.parse_args()?;
-
     titta.get_contents()?;
+    titta.format_items();
+
+    // aux cmd: ta tree
+    if titta.f_view_as_tree {
+        titta.view_as_tree()?;
+        return Ok(());
+    }
+
+    // main cmd: ta
     titta.print_contents();
 
     Ok(())
@@ -40,6 +50,7 @@ struct Titta {
     f_with_color: bool,
     f_show_hidden: bool,
     f_show_executables: bool,
+    f_view_as_tree: bool,
 }
 
 impl Titta {
@@ -58,6 +69,25 @@ impl Titta {
             f_with_color: false,
             f_show_hidden: false,
             f_show_executables: false,
+            f_view_as_tree: false,
+        }
+    }
+    // add function here to format items once and then this can be used in ta tree too.
+    // add formatted string as a new field to the item struct for more portability
+    fn format_items(&mut self) {
+        for item in self.dir_items.iter_mut() {
+            let mut icon: String = "".to_string();
+            if self.f_use_devicons {
+                icon = format!("{} ", &item.icon);
+            }
+
+            let color_end: String = "\x1b[0m".to_string();
+            let mut color = color_end.clone();
+            if self.f_with_color {
+                color = item.color_code.clone();
+            }
+
+            item.format = format!("{color}{icon}{name}{color_end}", name = item.name);
         }
     }
 
@@ -73,25 +103,17 @@ impl Titta {
 
         for row in self.dir_items.chunks(cols) {
             for item in row {
-                let mut icon: String = "".to_string();
-                if self.f_use_devicons {
-                    icon = format!("{} ", &item.icon);
-                }
-
-                let mut color: String = "\x1b[0m".to_string();
-                let color_end: String = "\x1b[0m".to_string();
-                if self.f_with_color {
-                    color = format!("{}", &item.color_code);
-                }
-
-                let print =
-                format!("{color}{icon}{name}{color_end}", name = item.name);
-                let len =
-                (format!("{icon}{name}", name = item.name)).chars().count();
+                let len = (format!(
+                    "{icon}{name}",
+                    icon = item.icon,
+                    name = item.name
+                ))
+                    .chars()
+                    .count();
 
                 let output = {
                     let spaces = " ".repeat(col_w.saturating_sub(len - 2));
-                    format!("{print}{spaces}")
+                    format!("{item}{spaces}", item = item.format)
                 };
 
                 print!("{output}");
@@ -189,6 +211,9 @@ impl Titta {
                 }
             }
 
+            // format placeholder
+            let format: String = "".to_string();
+
             // push
             self.dir_items.push(Item {
                 f_type: f_type.clone(),
@@ -200,6 +225,7 @@ impl Titta {
                 is_exec,
                 name,
                 abs_path: opath.as_mut().unwrap().path(),
+                format,
             });
         }
 
@@ -235,6 +261,10 @@ impl Titta {
                 }
                 "-e" => {
                     self.f_show_executables = true;
+                    continue;
+                }
+                "tree" => {
+                    self.f_view_as_tree = true;
                     continue;
                 }
                 _ => break,
