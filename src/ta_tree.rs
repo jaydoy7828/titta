@@ -1,23 +1,11 @@
-// use crate::Titta;
-// use std::io;
-//
-// impl Titta {
-//     /// subcommand
-//     pub fn s_view_as_tree(&mut self) -> io::Result<()> {
-//         Ok(())
-//     }
-// }
-
 use crate::Titta;
 use crate::file_attr::lookup;
 
-use std::fs;
-use std::io;
 use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
+use std::{fs, io};
 
 impl Titta {
-    /// subcommand: `tree [depth]`
     pub fn s_view_as_tree(&mut self) -> io::Result<()> {
         let root: PathBuf = if self.use_opt_dir {
             self.opt_dir.clone()
@@ -25,10 +13,7 @@ impl Titta {
             self.current_dir.clone()
         };
 
-        // print root name first (like `tree` does)
-        println!("{}", root.display());
-
-        // depth behavior: if sf_tree_lvl == 0 -> print nothing below root
+        // depth behavior
         let max_depth = self.sf_tree_lvl.max(0) as usize;
 
         if max_depth == 0 {
@@ -50,7 +35,7 @@ impl Titta {
             return Ok(());
         }
 
-        // collect and sort entries: directories first, then files, both by name
+        // collect and sort entries: directories first, then files
         let mut entries: Vec<fs::DirEntry> =
         fs::read_dir(dir)?.filter_map(Result::ok).collect();
 
@@ -127,12 +112,11 @@ impl Titta {
     }
 
     fn format_tree_item(&self, path: &Path, name: &str, is_dir: bool) -> String {
-        // decide "type key" for lookup()
+        // decide key for lookup()
         #[allow(unused)]
         let mut key = String::new();
 
         if is_dir {
-            // hidden dir gets a special key
             if name.starts_with('.') {
                 key = "hidden_dir".to_string();
             } else {
