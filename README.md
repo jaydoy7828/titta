@@ -47,7 +47,7 @@ cargo install titta
 ## 💻 Usage
     
 ``` bash
-ta <flags> <optional path>
+$ ta <flags> <optional path>
 ```
   
 ### Flags

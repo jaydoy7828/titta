@@ -3,7 +3,9 @@ use std::os::unix::fs::PermissionsExt;
 use std::panic;
 use std::{io, path::PathBuf};
 
+mod constants;
 mod file_attr;
+mod help;
 mod ta_tree;
 use crate::file_attr::*;
 
@@ -25,12 +27,18 @@ struct Item {
 fn main() -> io::Result<()> {
     let mut titta: Titta = Titta::new();
     titta.parse_args()?;
+
+    if titta.s_help {
+        titta.s_help();
+        return Ok(());
+    }
+
     titta.get_contents()?;
     titta.format_items();
 
     // aux cmd: ta tree
-    if titta.f_view_as_tree {
-        titta.view_as_tree()?;
+    if titta.s_view_as_tree {
+        titta.s_view_as_tree()?;
         return Ok(());
     }
 
@@ -50,7 +58,8 @@ struct Titta {
     f_with_color: bool,
     f_show_hidden: bool,
     f_show_executables: bool,
-    f_view_as_tree: bool,
+    s_view_as_tree: bool,
+    s_help: bool,
 }
 
 impl Titta {
@@ -69,7 +78,8 @@ impl Titta {
             f_with_color: false,
             f_show_hidden: false,
             f_show_executables: false,
-            f_view_as_tree: false,
+            s_view_as_tree: false,
+            s_help: false,
         }
     }
     // add function here to format items once and then this can be used in ta tree too.
@@ -247,6 +257,14 @@ impl Titta {
             let arg = self.next_arg()?;
 
             match arg.as_str() {
+                "tree" => {
+                    self.s_view_as_tree = true;
+                    continue;
+                }
+                "help" => {
+                    self.s_help = true;
+                    continue;
+                }
                 "-i" => {
                     self.f_use_devicons = true;
                     continue;
@@ -261,10 +279,6 @@ impl Titta {
                 }
                 "-e" => {
                     self.f_show_executables = true;
-                    continue;
-                }
-                "tree" => {
-                    self.f_view_as_tree = true;
                     continue;
                 }
                 _ => break,

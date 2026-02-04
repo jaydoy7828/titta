@@ -2,12 +2,15 @@
 name = "titta"
 description = "An alternative to ls built in Rust."
 repository = "https://github.com/simon-danielsson/titta"
+authors = ["Simon Danielsson <contact@simondanielsson.se>"]
+keywords = ["terminal", "unix", "utility", "tools"]
 homepage = "https://www.simondanielsson.se"
 exclude = ["media/"]
 license = "MIT"
 readme = "README.md"
 version = "0.1.23"
 edition = "2024"
+rust-version = "1.88.0"
 
 [[bin]]
 name = "ta"
@@ -20,3 +23,5 @@ panic = "abort"
 strip = true
 
 [dependencies]
+
+
